@@ -1,5 +1,5 @@
 # Verticlick
-### The Mousse of The Future :)
+### The Mouse of The Future :)
 
 ## What This Is
 
@@ -22,13 +22,54 @@ repetitive movements.
 
 
 ## What You Need
-1. Adafruit Circuit Playground Bluefruit (https://www.adafruit.com/product/4333)
-2. A USB-A to MicroUSB connector
-3. A Mac or Windows device with a USB-A port
+- Adafruit Circuit Playground Bluefruit (https://www.adafruit.com/product/4333)
+- A USB-A to MicroUSB connector
+- A Mac or Windows device with a USB-A port
+- Arduino IDE
 
 ## Included Files
 - main.py
      - the file to be run on the user's device to run mouse movements
-- mouse.ino
-     - the file inputted into the Bluefruit device
-- 
+- Verticlick.ino
+     - the file inputted into the Bluefruit device via Arduino IDE
+- Anker MX Vertical Mouse - 6259427
+     - files to 3d print a mouse casing, from https://www.thingiverse.com/thing:6259427
+     - includes Battery Cover, Body, Bottom, and Button
+ 
+## How to Use
+1. Plug in your Adafruit Circuit Playground Bluefruit into your device
+   
+3. Open Verticlick.ino in the Arduino IDE
+
+   (If you have previously set up an Adafruit Circuit Playground Bluefruit device, skip to step 2F)
+   
+     A. Go to File -> Preferences -> Additional Boards Manager URLs and input the following link:
+        https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
+   
+     B. In the Boards Manager tab (from the side menu), install the "Adafruit nRF52" package
+   
+     C. Go to Tools -> Board -> Adafruit nRF52 -> Adafruit Circuit Playground Bluefruit
+   
+     D. Go to Tools -> Programmer -> Bootloader DFU for Bluefruit nRF52
+   
+     E. Go to Tools -> Burn Bootloader
+   
+     F. Double tap the "reset" button on the Bluefruit. This should make the LEDs turn green
+   
+     G. Make sure the Bluefruit device is connected via the "Select Board and Port" menu
+   
+     H. Select "upload"
+   
+5. Run main.py
+   
+   Note: you may have to modify the COM port manually, depending on your device
+   
+7. Enjoy!
+
+## Functions
+- Move the Bluefruit device around on a flat surface to control your device's mouse
+- Click the left and right buttons on the Bluefruit to left and right click buttons, respectively
+
+## Known Issues
+- Mouse movement is slow and clunky
+- Will entirely crash the python file if unplugged

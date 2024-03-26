@@ -1,10 +1,5 @@
-import os, pty, serial, pyautogui, json
+import serial, pyautogui
 from termcolor import colored
-past_values = [0] * 3
-
-multipler = 1
-read_time = 250
-input_stream = ""
 
 try: 
     ser = serial.Serial("/dev/cu.usbmodem1421201", 9600) 
@@ -12,8 +7,7 @@ except Exception as e:
     print(e)
     ser = serial.Serial("COM6", 9600)
 
-# initialize the values for these variables
-previous_mouse_clicks = [False, False]
+
 
 def get_input(input_stream):
     # Gets any data packages foundi n the input buffer
@@ -31,9 +25,10 @@ def get_input(input_stream):
 
         # Use the data
         ID, x, y, z, l, r = *map(float, data[1:-1].split(",")),
+
         extra_parameters["LeftClick"] = l
         extra_parameters["RightClick"] = r
-        
+    
         total[0] += x
         total[1] += y
         total[2] += z
@@ -49,6 +44,7 @@ def debug_output(total):
     print(*[colored(f"{str(round(abs(i), 3))[:5]}", "red") if i < 0 else colored(f"{str(round(abs(i),3))[:5]}", "green") for i in total], "\n"*10 )
 
 def handle_mouse_clicks(leftMouseDown, rightMouseDown, previous_mouse_clicks):
+
 
     # Detection for the left mouse clicks
     if not previous_mouse_clicks[0] and leftMouseDown:
@@ -68,24 +64,33 @@ def handle_mouse_clicks(leftMouseDown, rightMouseDown, previous_mouse_clicks):
     previous_mouse_clicks[1] = rightMouseDown
     
 
-while True:
-    # Get new information from the serial connection
-    new_packets = ser.read(read_time).decode("utf-8")
+def main():
+    multipler = 5 # Multiplier to how fast the mouse works
+    read_time = 250 # How long the serial reads for (in ms)
+    input_stream = "" # Input buffer
+    previous_mouse_clicks = [False, False] # For holding the previous values of the left/right mouse buttons
 
-    # Add new data to buffer
-    input_stream += new_packets 
 
-    # Get any current packets from the buffer
-    input_stream, total, extra_parameters = get_input(input_stream) 
-    
-    # Handle left click / right click functionality
-    handle_mouse_clicks(extra_parameters["LeftClick"], extra_parameters["RightClick"], previous_mouse_clicks)
+    while True:
+        # Get new information from the serial connection
+        new_packets = ser.read(read_time).decode("utf-8")
 
-    # Removing values of low movement
-    total = [0 if abs(total[i]) < 5 else total[i] for i in range(3)]    
+        # Add new data to buffer
+        input_stream += new_packets 
 
-    # Moving the mouse
-    pyautogui.move(total[1] * multipler, total[0] * multipler)
+        # Get any current packets from the buffer
+        input_stream, total, extra_parameters = get_input(input_stream) 
+        
+        # Handle left click / right click functionality
+        handle_mouse_clicks(extra_parameters["LeftClick"], extra_parameters["RightClick"], previous_mouse_clicks)
 
-    # Printing debug output
-    debug_output(total)
+        # Removing values of low movement
+        total = [0 if abs(total[i]) < 5 else total[i] for i in range(3)]    
+
+        # Moving the mouse
+        pyautogui.move(total[1] * multipler, total[0] * multipler)
+
+        # Printing debug output
+        debug_output(total)
+
+main()

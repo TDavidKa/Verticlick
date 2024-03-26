@@ -16,6 +16,8 @@ void loop() {
   L = CircuitPlayground.leftButton();
   R = CircuitPlayground.rightButton();
 
+  
+
 
   Serial.print("{" + String(id) + "," + String(X) + "," + String(Y) + "," + String(Z) + "," + String(L) + "," + String(R) + "}");
 

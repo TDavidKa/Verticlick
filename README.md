@@ -38,20 +38,33 @@ repetitive movements.
  
 ## How to Use
 1. Plug in your Adafruit Circuit Playground Bluefruit into your device
-2. Open Verticlick.ino in the Arduino IDE
+   
+3. Open Verticlick.ino in the Arduino IDE
+
    (If you have previously set up an Adafruit Circuit Playground Bluefruit device, skip to step 2F)
+   
      A. Go to File -> Preferences -> Additional Boards Manager URLs and input the following link:
         https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
+   
      B. In the Boards Manager tab (from the side menu), install the "Adafruit nRF52" package
+   
      C. Go to Tools -> Board -> Adafruit nRF52 -> Adafruit Circuit Playground Bluefruit
+   
      D. Go to Tools -> Programmer -> Bootloader DFU for Bluefruit nRF52
+   
      E. Go to Tools -> Burn Bootloader
+   
      F. Double tap the "reset" button on the Bluefruit. This should make the LEDs turn green
+   
      G. Make sure the Bluefruit device is connected via the "Select Board and Port" menu
+   
      H. Select "upload"
-3. Run main.py
+   
+5. Run main.py
+   
    Note: you may have to modify the COM port manually, depending on your device
-4. Enjoy!
+   
+7. Enjoy!
 
 ## Functions
 - Move the Bluefruit device around on a flat surface to control your device's mouse

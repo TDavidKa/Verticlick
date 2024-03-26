@@ -10,8 +10,7 @@ except Exception as e:
 
 
 def get_input(input_stream):
-    # Gets any data packages foundi n the input buffer
-
+    # Gets any data packages found in the input buffer
     total = [0, 0, 0]
     extra_parameters = {}
     while "{" in input_stream and "}" in input_stream: #Complete Data Package Found
@@ -24,15 +23,13 @@ def get_input(input_stream):
 
 
         # Use the data
-        ID, x, y, z, l, r = *map(float, data[1:-1].split(",")),
+        x, y, l, r = *map(float, data[1:-1].split(",")),
 
         extra_parameters["LeftClick"] = l
         extra_parameters["RightClick"] = r
     
         total[0] += x
         total[1] += y
-        total[2] += z
-
 
         # Remove from the stream
         input_stream = input_stream[input_stream.index("}") + 1:]
@@ -65,7 +62,7 @@ def handle_mouse_clicks(leftMouseDown, rightMouseDown, previous_mouse_clicks):
     
 
 def main():
-    multipler = 5 # Multiplier to how fast the mouse works
+    multipler = 1 # Multiplier to how fast the mouse works
     read_time = 250 # How long the serial reads for (in ms)
     input_stream = "" # Input buffer
     previous_mouse_clicks = [False, False] # For holding the previous values of the left/right mouse buttons

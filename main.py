@@ -1,6 +1,21 @@
 import serial, pyautogui
 from termcolor import colored
 
+import sys
+ 
+import pygame
+from pygame.locals import *
+ 
+pygame.init()
+ 
+fps = 60
+fpsClock = pygame.time.Clock()
+ 
+width, height = 640, 480
+screen = pygame.display.set_mode((width, height))
+pygame.display.set_caption('This is totally a processing window')
+
+
 try: 
     ser = serial.Serial("/dev/cu.usbmodem1421201", 9600) 
 except Exception as e:
@@ -60,6 +75,32 @@ def handle_mouse_clicks(leftMouseDown, rightMouseDown, previous_mouse_clicks):
     
     previous_mouse_clicks[1] = rightMouseDown
     
+bg = pygame.image.load("temp.jpg")
+def output_loop(total):
+ 
+  screen.fill((0, 0, 0))
+  screen.blit(pygame.transform.scale(bg, (width, height)), (0, 0))
+  
+  for event in pygame.event.get():
+    if event.type == pygame.QUIT:
+      pygame.quit()
+      sys.exit()
+  
+  total[0] *= -1
+  mulitplier = 2
+  if total[0] > 0:
+    pygame.draw.rect(screen, (0, 128, 0), (width // 2, height // 2, total[0] * mulitplier, 20), 0)
+  else:
+      pygame.draw.rect(screen, (0, 128, 0), (width // 2 + total[0] * mulitplier, height // 2, abs(total[0]) * mulitplier, 20), 0)
+
+  if total[1] > 0:
+    pygame.draw.rect(screen, (128, 0, 0), (width // 2, height // 2, 20, total[1] * mulitplier), 0)
+  else:
+    pygame.draw.rect(screen, (128, 0, 0), (width // 2, height // 2 + total[1] * mulitplier, 20, abs(total[1]) * mulitplier), 0)
+
+  
+  pygame.display.flip()
+  fpsClock.tick(fps)
 
 def main():
     multipler = 1 # Multiplier to how fast the mouse works
@@ -89,5 +130,6 @@ def main():
 
         # Printing debug output
         debug_output(total)
+        output_loop(total)
 
 main()

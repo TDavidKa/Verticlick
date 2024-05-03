@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/tabulator-tables/dist/css/tabulator.min.css" rel="stylesheet">
+    <title>Node Page</title>
+</head>
+<body>
+
+    <script async src="../lib/es-module-shims-1.4.6.js"></script>
+    <script type="importmap">
+        {
+        "imports": {
+            "vue": "../lib/vue.esm-browser.js",
+            "vue3-sfc-loader": "../lib/vue3-sfc-loader.esm.js",
+            "tabulator": 			"https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js",
+            "@canvasjs/charts": "../lib/vue-canvasjs/canvasjs.min.js",
+            "@canvasjs/vue-charts": "../lib/vue-canvasjs/vue-chartsjs.js"
+
+        }
+        }
+    </script>
+    
+    <script src="./vues/helpers.js"></script>
+
+    <script type="module">
+
+        import * as Vue from 'vue'
+        import * as RemoteVue from './vues/remote-vue-module.js'
+        import * as Tabulator from 'tabulator'
+        import CanvasJSChart from '@canvasjs/vue-charts'
+  
+
+        window['RemoteVue'] = RemoteVue;
+
+        RemoteVue.component("./vues/main.vue")
+            .then((root) => {
+                let app = Vue.createApp(root).use(CanvasJSChart).mount("#main");
+            });
+
+
+        
+
+    </script>
+
+    <div id="main"></div>
+
+</body>
+</html>
